@@ -1,21 +1,24 @@
-import requests
+import os
+from groq import Groq
 
-def ask_ollama(prompt):
-    url = "http://localhost:11434/api/generate"
-    data = {
-        "model": "mistral",
-        "prompt": prompt,
-        "stream": False
-    }
-    response = requests.post(url, json=data)
-    return response.json()["response"]
+def ask_groq(prompt):
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    return response.choices[0].message.content
 
 
 def analyze_resume(resume_text, job_description):
     prompt = f"""
-You are an AI career coach.
+You are an AI resume analyzer.
 
-Analyze the resume against the job description.
+Compare the following resume with the job description.
 
 Resume:
 {resume_text}
@@ -24,11 +27,9 @@ Job Description:
 {job_description}
 
 Provide:
-
-1. Resume strengths
-2. Resume weaknesses
-3. Skill gap analysis
-4. Match score (0–100%)
-5. 5 role-based interview questions
+1. Match score out of 100
+2. Missing skills
+3. Improvement suggestions
 """
-    return ask_ollama(prompt)
+
+    return ask_groq(prompt)
