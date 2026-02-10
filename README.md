@@ -1,28 +1,48 @@
 # Resume & Interview AI Agent
 
-An AI-powered web application that analyzes resumes, compares them with job descriptions, and conducts mock interviews with feedback.
+An AI-powered web application that analyzes resumes, detects skill gaps, and conducts mock interviews with feedback.
+
+## Live Demo
+https://resume-interview-ai-agent.streamlit.app/
 
 ## Features
-- Resume upload (PDF) and JD
+- Upload resume (PDF)
 - Resume analysis
 - Skill gap detection
 - Job match score
 - Role-based interview questions
-- Mock interview with answer evaluation
+- 5-question mock interview
+- AI-based answer evaluation
 
 ## Tech Stack
 - Python
 - Streamlit
-- Ollama (Mistral model)
+- Groq API (LLaMA 3)
 - pdfplumber
 
-## How to Run
+## Project Structure
+resume_ai_agent/
+│
+├── app.py
+├── resume_parser.py
+├── analyzer.py
+├── interview.py
+├── requirements.txt
+└── README.md
 
-1. Install dependencies:
+## How to Run Locally
+
+1. Clone the repo:
+   git clone <your-repo-link>
+
+2. Go into the folder:
+   cd resume_ai_agent
+
+3. Install dependencies:
    pip install -r requirements.txt
 
-2. Start Ollama:
-   ollama run mistral
+4. Create a `.env` file:
+   GROQ_API_KEY=your_api_key_here
 
-3. Run the app:
+5. Run the app:
    streamlit run app.py
